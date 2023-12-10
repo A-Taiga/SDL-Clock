@@ -40,10 +40,10 @@ concept AngleUnit = requires (T v)
 };
 
 template<AngleUnit T>
-inline static decltype(auto) cosine(T value);
+inline static auto cosine(T value);
 
 template<AngleUnit T>
-inline static decltype(auto) sine(T value);
+inline static auto sine(T value);
 
 
 template<vecReq T>
@@ -156,9 +156,9 @@ inline int to12H(int h)
 }
 
 template<AngleUnit T>
-inline static decltype(auto) cosine(T value) { return std::cos(value); }
+inline static auto cosine(T value) { return std::cos(value); }
 
 template<AngleUnit T>
-inline static decltype(auto) sine(T value) { return std::sin(value); }
+inline static auto sine(T value) { return std::sin(value); }
 
 #endif
