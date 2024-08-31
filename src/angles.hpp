@@ -1,12 +1,8 @@
 #ifndef ANGLES_HPP
 #define ANGLES_HPP
 
-#include <concepts>
 #include <type_traits>
-#include <cmath>
-#include <utility>
-#include <concepts>
-
+#include <math.h>
 
 template<class T>
 concept AngleType = std::is_floating_point_v<T> || std::is_integral_v<T>;
@@ -73,7 +69,6 @@ namespace angles
 	struct ArcMinutes
 	{
 		T val;
-
 		constexpr ArcMinutes() = default;
 		constexpr ArcMinutes(T v);
 		// cast from Degrees
@@ -86,8 +81,6 @@ namespace angles
 		constexpr ArcMinutes<T>& operator = (const ArcMinutes<T>& other) = default;
 		 // move assignment
 		constexpr ArcMinutes<T>& operator = (ArcMinutes<T>&& other) = default;
-
-		
 		constexpr operator Degrees<T>() const { return Degrees<T>(); }
 		constexpr operator T(){return val;}
 
@@ -143,23 +136,6 @@ concept castType = requires (T v)
 	std::is_same_v<T, angles::Degrees<decltype(v.val)>>
 	|| std::is_same_v<T, angles::Radians<decltype(v.val)>>;
 };
-
-template<castType T>
-T constexpr cast(auto v)
-{
-	if constexpr (std::is_same_v<decltype(v), T>)
-	{
-		return v;
-	}
-	if constexpr (std::is_same_v<decltype(v), angles::Degrees<decltype(v.val)>>)
-	{
-		return (T(v.val * (M_PI/180)));
-	}
-	else if constexpr ( std::is_same_v<decltype(v), angles::Radians<decltype(v.val)>> )
-	{
-		return (T(v.val * (180/M_PI)));
-	}
-}
 
 consteval auto operator "" _degrees(unsigned long long v)
 {
